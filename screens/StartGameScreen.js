@@ -10,7 +10,7 @@ const StartGameScreen = () => {
             <Text style={styles.title}>Start a new screen</Text>
             <Card style={styles.inputContainer}>
                 <Text>Select a number</Text>
-                <Input style={styles.input} keyboardType="numeric" maxLength={2}/>
+                <Input style={styles.input} keyboardType="number-pad" maxLength={2}/>
                 <View style={styles.buttonContainer}>
                     <View style={styles.button}>
                         <Button title="Reset" onPress={() => {}} color={colours.ACCENT}/>
