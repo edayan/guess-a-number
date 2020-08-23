@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         color: `white`,
-        fontSize: 18
+        fontSize: 18,
+        fontFamily: 'open-sans-bold'
     }
 });
 
