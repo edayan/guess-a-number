@@ -41,6 +41,11 @@ export default function App() {
     }
 
     let content = <StartGameScreen onStartGame={startNameHandler}/>
+    //TODO: remove
+    content=<GameOverScreen
+    numberOfRounds={1}  userNumber={23}
+    onNewGame={newGameHandler}/>;
+
     if (userNumber && guessRounds <= 0) {
         content = <GameScreen
             userChoice={userNumber}
