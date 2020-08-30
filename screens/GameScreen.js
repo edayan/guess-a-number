@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react'
-import {Alert, Button, StyleSheet, Text, View} from 'react-native'
-import NumberContainer from "../components/NumberContainer";
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import Card from "../components/Card";
-
+import MainButon from '../components/MainButton';
+import NumberContainer from "../components/NumberContainer";
 
 const generateRandomBetween = (min, max, exclude) => {
     min = Math.ceil(min);
@@ -26,7 +26,7 @@ const GameScreen = props => {
         if ((direction === 'lower' && props.userChoice > currentGuess)
             || (direction === 'greater' && props.userChoice < currentGuess)) {
             Alert.alert('Don\'t lie', 'You know you choose wrong direction',
-                [{text: 'Sorry', style: 'cancel'}]);
+                [{ text: 'Sorry', style: 'cancel' }]);
             return
         }
 
@@ -40,7 +40,7 @@ const GameScreen = props => {
         setRounds(currentRounds => currentRounds + 1);
     }
 
-    const {userChoice, onGameOver} = props;
+    const { userChoice, onGameOver } = props;
     useEffect(() => {
         if (currentGuess === userChoice) {
             onGameOver(rounds);
@@ -52,12 +52,8 @@ const GameScreen = props => {
             <Text>Opponents guess</Text>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.buttonContainer}>
-                <Button title="LOWER" onPress={() => {
-                    nextGuessHandler('lower')
-                }}/>
-                <Button title="GREATER" onPress={() => {
-                    nextGuessHandler('greater')
-                }}/>
+                <MainButon onPress={() => { nextGuessHandler('lower') }}>LOWER</MainButon>
+                <MainButon onPress={() => { nextGuessHandler('greater') }}>GREATER</MainButon>
             </Card>
         </View>
     )
@@ -73,8 +69,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 20,
-        width: 300,
-        maxWidth: '80%'
+        width: 400,
+        maxWidth: '95%'
     }
 })
 export default GameScreen;
