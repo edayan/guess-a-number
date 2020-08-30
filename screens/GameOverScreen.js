@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Button, Image } from 'react-native'
 import globalStyles from '../constants/default-styles'
+import colors from '../constants/colors';
 
 const GameOverScreen = props => {
 
@@ -8,11 +9,23 @@ const GameOverScreen = props => {
         <View style={styles.screen}>
             <Text style={globalStyles.title}>The game is over</Text>
             <View style={styles.imageContainer}>
-                <Image source={require('../assets/success.png')} style={styles.image} resizeMode="cover" />
+                {/* <Image source={require('../assets/success.png')} style={styles.image} resizeMode="cover" /> */}
+                <Image
+                    fadeDuration={400}
+                    source={{ uri: 'https://images.unsplash.com/photo-1519834785169-98be25ec3f84?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80' }}
+                    style={styles.image}
+                    resizeMode="cover" />
+
+            </View>
+            <View style={styles.descriptionContainer}>
+                <Text style={{...globalStyles.bodyText, ...styles.descriptionText}}>
+                    Your phone number needed
+                <Text style={{...styles.highlight, ...globalStyles.title}}> {props.numberOfRounds} </Text>
+                 rounds to guess the number
+                <Text style={{...styles.highlight, ...globalStyles.title}}> {props.userNumber}. </Text>
+                </Text>
             </View>
 
-            <Text style={globalStyles.bodyText}>Number of rounds: {props.numberOfRounds}</Text>
-            <Text style={globalStyles.bodyText}>Number was: {props.userNumber}</Text>
             <Button title="START AGAIN" onPress={props.onNewGame} />
         </View>
     )
@@ -36,8 +49,21 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%',
+    },
+    descriptionContainer: {
+        width: '80%',
+        marginHorizontal: 20,
+        marginVertical: 20,
+        marginBottom: 10,
+    },
+    descriptionText: {
+        textAlign: 'center',
+        fontSize: 20
+    },
+    highlight: {
+        color: colors.PRIMARY
     }
-   
+
 })
 
 export default GameOverScreen;
