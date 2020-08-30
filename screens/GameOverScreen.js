@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button, Image } from 'react-native'
-import globalStyles from '../constants/default-styles'
+import { Image, StyleSheet, Text, View } from 'react-native';
+import MainButton from '../components/MainButton';
 import colors from '../constants/colors';
+import globalStyles from '../constants/default-styles';
 
 const GameOverScreen = props => {
 
@@ -25,8 +26,7 @@ const GameOverScreen = props => {
                 <Text style={{...styles.highlight, ...globalStyles.title}}> {props.userNumber}. </Text>
                 </Text>
             </View>
-
-            <Button title="START AGAIN" onPress={props.onNewGame} />
+            <MainButton onPress={props.onNewGame}>START AGAIN</MainButton>
         </View>
     )
 }

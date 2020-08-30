@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {Alert, Button, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Button, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import Card from "../components/Card";
-import colours from '../constants/colors'
 import Input from "../components/Input";
+import MainButton from '../components/MainButton';
 import NumberContainer from "../components/NumberContainer";
+import colours from '../constants/colors';
 import DefaultStyles from '../constants/default-styles';
-
 
 const StartGameScreen = (props) => {
 
@@ -42,7 +42,9 @@ const StartGameScreen = (props) => {
         confirmedOutput = <Card style={styles.summaryContainer}>
             <Text>You selected:</Text>
             <NumberContainer>{selectedNumber}</NumberContainer>
-            <Button title="START GAME" onPress={() =>props.onStartGame(selectedNumber)}/>
+            <MainButton  onPress={() =>props.onStartGame(selectedNumber)}>
+                START GAME
+            </MainButton>
         </Card>
     }
 

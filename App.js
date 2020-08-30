@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
-import {AppLoading} from 'expo'
-
-import Header from './components/Header'
-import StartGameScreen from './screens/StartGameScreen'
-import GameScreen from "./screens/GameScreen";
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import Header from './components/Header';
 import GameOverScreen from "./screens/GameOverScreen";
+import GameScreen from "./screens/GameScreen";
+import StartGameScreen from './screens/StartGameScreen';
+
 
 const fetchFonts = () => {
     return Font.loadAsync({
@@ -41,10 +41,6 @@ export default function App() {
     }
 
     let content = <StartGameScreen onStartGame={startNameHandler}/>
-    //TODO: remove
-    content=<GameOverScreen
-    numberOfRounds={1}  userNumber={23}
-    onNewGame={newGameHandler}/>;
 
     if (userNumber && guessRounds <= 0) {
         content = <GameScreen
