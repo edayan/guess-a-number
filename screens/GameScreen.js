@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, StyleSheet, Text, View, ScrollView } from 'react-native';
+import { Alert, StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
 import Card from "../components/Card";
 import MainButon from '../components/MainButton';
 import NumberContainer from "../components/NumberContainer";
@@ -17,11 +17,20 @@ const generateRandomBetween = (min, max, exclude) => {
     }
 }
 
-const renderListItem = (value, numberOfRounds) => (
-    <View key={value} style={styles.listItem}>
-        <Text style={globalStyles.bodyText}>#{numberOfRounds}</Text>
-        <Text style={globalStyles.bodyText}>{value}</Text>
+// for scroll view
+// const renderListItem = (value, numberOfRounds) => (
+//     <View key={value} style={styles.listItem}>
+//         <Text style={globalStyles.bodyText}>#{numberOfRounds}</Text>
+//         <Text style={globalStyles.bodyText}>{value}</Text>
+//     </View>)
+
+//for flatlist
+const renderListItem = (listLength, itemData) => (
+    <View style={styles.listItem}>
+        <Text style={globalStyles.bodyText}>#{listLength - itemData.index}</Text>
+        <Text style={globalStyles.bodyText}>{itemData.item}</Text>
     </View>)
+
 
 const GameScreen = props => {
     const initialGuess = generateRandomBetween(1, 99, props.userChoice);
@@ -69,9 +78,13 @@ const GameScreen = props => {
                 </MainButon>
             </Card>
             <View style={styles.listContainer}>
-                <ScrollView contentContainerStyle={styles.list}>
+                {/* <ScrollView contentContainerStyle={styles.list}>
                     {pastGuesses.map((guess, index) => renderListItem(guess, pastGuesses.length - index))}
-                </ScrollView>
+                </ScrollView> */}
+                <FlatList contentContainerStyle={styles.list}
+                    data={pastGuesses}
+                    renderItem={renderListItem.bind(this, pastGuesses.length)}l̥
+                    keyExtractor={item => item.toString()} />
             </View>
         </View>
     )
@@ -92,11 +105,12 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         flex: 1, //ScrollView inside View need flex 1 to scroll in android.
-        width: '80%'
+        //width: '80%',// for scroll view
+        width: '60%'// for flat list
     },
     list: {
         flexGrow: 1, // use whole available space, but keeps the other properties (Fixes not scrolling in Android).
-        alignItems: 'center',
+        // alignItems: 'center', // only for scroll view
         justifyContent: 'flex-end'// list starts from end
     },
     listItem: {
@@ -107,7 +121,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '60%'
+        //width: '60%'// for scroll view,
+        width: '100%'// for flat list
     }
 })
 export default GameScreen;
