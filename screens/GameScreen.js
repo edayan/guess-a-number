@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
+import { Alert, StyleSheet, Text, View, ScrollView, FlatList, Dimensions } from 'react-native';
 import Card from "../components/Card";
 import MainButon from '../components/MainButton';
 import NumberContainer from "../components/NumberContainer";
@@ -36,6 +36,7 @@ const GameScreen = props => {
     const initialGuess = generateRandomBetween(1, 99, props.userChoice);
     const [currentGuess, setCurrentGuess] = useState(initialGuess)
     const [pastGuesses, setPastGuesses] = useState([initialGuess]);
+    const [availableDeviceHeight, setAvailableDeviceHeight]  = useState(Dimensions.get('window').height);
 
     const currentLow = useRef(1);
     const currentHigh = useRef(100);
@@ -65,6 +66,47 @@ const GameScreen = props => {
         }
     }, [currentGuess, userChoice, onGameOver]);
 
+
+    useEffect(() =>  {
+        const updateLayout = () => {
+            setAvailableDeviceHeight(Dimensions.get('window').height);
+        }
+        Dimensions.addEventListener('change', updateLayout);
+        return() => Dimensions.removeEventListener('change', updateLayout);
+
+    });
+
+
+
+    if (availableDeviceHeight < 500) {
+        return (
+            <View style={styles.screen}>
+                <Text>Opponents guess</Text>
+                <View style={styles.controls}>
+                    <MainButon onPress={() => { nextGuessHandler('greater') }}>
+                        <Ionicons name="md-add" size={24} color="white" />
+                    </MainButon>
+                    <NumberContainer>{currentGuess}</NumberContainer>
+                    <MainButon onPress={() => { nextGuessHandler('lower') }}>
+                        <Ionicons name="md-remove" size={24} color="white" />
+                    </MainButon>
+                </View>
+
+
+                <View style={styles.listContainer}>
+                    {/* <ScrollView contentContainerStyle={styles.list}>
+                    {pastGuesses.map((guess, index) => renderListItem(guess, pastGuesses.length - index))}
+                </ScrollView> */}
+                    <FlatList contentContainerStyle={styles.list}
+                        data={pastGuesses}
+                        renderItem={renderListItem.bind(this, pastGuesses.length)} l̥
+                        keyExtractor={item => item.toString()} />
+                </View>
+            </View>
+        )
+    }
+
+
     return (
         <View style={styles.screen}>
             <Text>Opponents guess</Text>
@@ -83,7 +125,7 @@ const GameScreen = props => {
                 </ScrollView> */}
                 <FlatList contentContainerStyle={styles.list}
                     data={pastGuesses}
-                    renderItem={renderListItem.bind(this, pastGuesses.length)}l̥
+                    renderItem={renderListItem.bind(this, pastGuesses.length)} l̥
                     keyExtractor={item => item.toString()} />
             </View>
         </View>
@@ -98,15 +140,21 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 20,
+        justifyContent: 'space-around',
+        marginTop: Dimensions.get('window').height > 600 ? 20 : 10,
         width: 400,
         maxWidth: '95%'
+    },
+    controls : {
+        flexDirection:  'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '80%'
     },
     listContainer: {
         flex: 1, //ScrollView inside View need flex 1 to scroll in android.
         //width: '80%',// for scroll view
-        width: '60%'// for flat list
+        width: Dimensions.get('window').width > 350 ? '60%' : '80%'
     },
     list: {
         flexGrow: 1, // use whole available space, but keeps the other properties (Fixes not scrolling in Android).
