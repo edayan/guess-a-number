@@ -4,10 +4,11 @@ import colors from '../constants/colors';
 import globalStyles from '../constants/default-styles';
 
 const MainButton = (props) => {
+
     return (
-        <TouchableOpacity onPress={props.onPress}>
+        <TouchableOpacity activeOpacity={0.6} onPress={props.onPress}>
             <View style={styles.button}>
-                <Text style={{...globalStyles.bodyTextBig,...styles.buttonText}}>{props.children}</Text>
+                <Text style={{ ...globalStyles.bodyTextBig, ...styles.buttonText }}>{props.children}</Text>
             </View>
         </TouchableOpacity>
     );

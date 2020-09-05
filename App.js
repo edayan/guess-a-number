@@ -1,7 +1,7 @@
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
 import Header from './components/Header';
 import GameOverScreen from "./screens/GameOverScreen";
 import GameScreen from "./screens/GameScreen";
@@ -22,8 +22,8 @@ export default function App() {
 
     if (!dataLoaded) {
         return <AppLoading startAsync={fetchFonts}
-                           onFinish={() => setDataLoaded(true)}
-                           onError={err => console.log(err)}/>
+            onFinish={() => setDataLoaded(true)}
+            onError={err => console.log(err)} />
     }
 
     const startNameHandler = (selectedNumber) => {
@@ -40,23 +40,24 @@ export default function App() {
         console.log('userNumber', userNumber, 'guessRounds', guessRounds);
     }
 
-    let content = <StartGameScreen onStartGame={startNameHandler}/>
+    let content = <StartGameScreen onStartGame={startNameHandler} />
 
     if (userNumber && guessRounds <= 0) {
         content = <GameScreen
             userChoice={userNumber}
-            onGameOver={gameOverHandler}/>
+            onGameOver={gameOverHandler} />
     } else if (guessRounds > 0) {
         content = <GameOverScreen
-            numberOfRounds={guessRounds}  userNumber={userNumber}
-            onNewGame={newGameHandler}/>
+            numberOfRounds={guessRounds} userNumber={userNumber}
+            onNewGame={newGameHandler} />
     }
 
     return (
-        <View style={styles.screen}>
-            <Header title="Guess a number"/>
-            {content}
-        </View>
+        <SafeAreaView style={styles.screen}>
+                <Header title="Guess a number" />
+                {content}
+        </SafeAreaView>
+
     );
 }
 
